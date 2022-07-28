@@ -68,9 +68,26 @@ class BoardWidget extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(
-                        Icons.notifications,
-                        color: Colors.grey,
+                      icon:  Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          const Icon(
+                            Icons.notifications,
+                            color: Colors.grey,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: 5,
+                            child: Text(
+                              cubit.allTasks.length.toString(),
+                              style: const TextStyle(
+                                fontSize: 7,
+                                color:  Colors.white ,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     IconButton(
@@ -188,47 +205,127 @@ class BoardWidget extends StatelessWidget {
         automaticIndicatorColorAdjustment: true,
         tabs: [
           Tab(
-            child: Text(
-              'All',
-              style: TextStyle(
-                color: (cubit.currentIndex == 0) ? Colors.black : Colors.grey,
-                fontWeight: (cubit.currentIndex == 0)
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'All',
+                  style: TextStyle(
+                    color: (cubit.currentIndex == 0) ? Colors.black : Colors.grey,
+                    fontWeight: (cubit.currentIndex == 0)
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 5,
+                  child: Text(
+                    cubit.allTasks.length.toString(),
+                    style: TextStyle(
+                      fontSize: 7,
+                      color: (cubit.currentIndex == 0) ? Colors.black : Colors.grey,
+                      fontWeight: (cubit.currentIndex == 0)
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Tab(
-            child: Text(
-              'Completed',
-              style: TextStyle(
-                color: (cubit.currentIndex == 1) ? Colors.black : Colors.grey,
-                fontWeight: (cubit.currentIndex == 1)
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'Completed',
+                  style: TextStyle(
+                    color: (cubit.currentIndex == 1) ? Colors.black : Colors.grey,
+                    fontWeight: (cubit.currentIndex == 1)
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 5,
+                  child: Text(
+                    cubit.completedTasks.length.toString(),
+                    style: TextStyle(
+                      fontSize: 7,
+                      color: (cubit.currentIndex == 1) ? Colors.black : Colors.grey,
+                      fontWeight: (cubit.currentIndex == 1)
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Tab(
-            child: Text(
-              'Uncompleted',
-              style: TextStyle(
-                color: (cubit.currentIndex == 2) ? Colors.black : Colors.grey,
-                fontWeight: (cubit.currentIndex == 2)
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'Uncompleted',
+                  style: TextStyle(
+                    color: (cubit.currentIndex == 2) ? Colors.black : Colors.grey,
+                    fontWeight: (cubit.currentIndex == 2)
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 5,
+                  child: Text(
+                    cubit.uncompletedTasks.length.toString(),
+                    style: TextStyle(
+                      fontSize: 7,
+                      color: (cubit.currentIndex == 2) ? Colors.black : Colors.grey,
+                      fontWeight: (cubit.currentIndex == 2)
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Tab(
-            child: Text(
-              'Favorite',
-              style: TextStyle(
-                color: (cubit.currentIndex == 3) ? Colors.black : Colors.grey,
-                fontWeight: (cubit.currentIndex == 3)
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'Favorite',
+                  style: TextStyle(
+                    color: (cubit.currentIndex == 3) ? Colors.black : Colors.grey,
+                    fontWeight: (cubit.currentIndex == 3)
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 5,
+                  child: Text(
+                    cubit.favoriteTasks.length.toString(),
+                    style: TextStyle(
+                      fontSize: 7,
+                      color: (cubit.currentIndex == 3) ? Colors.black : Colors.grey,
+                      fontWeight: (cubit.currentIndex == 3)
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

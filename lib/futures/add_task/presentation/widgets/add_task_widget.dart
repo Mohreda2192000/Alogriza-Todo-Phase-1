@@ -191,7 +191,6 @@ class AddTaskWidget extends StatelessWidget {
                             child: MyButton(
                               text: 'Create a task',
                               callback: (){
-
                                 if(formKey.currentState!.validate()){
                                   String isFavorite=((cubit.favorite)?"favorite":"unfavored");
                                   cubit.insertDatabase(
