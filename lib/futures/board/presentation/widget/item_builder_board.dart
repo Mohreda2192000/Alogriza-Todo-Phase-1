@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:totodo/futures/add_task/presentation/pages/add_task_page.dart';
 
 import '../../../../core/const/funcations.dart';
 import '../../../../core/cubits/cubit_todo/cubit.dart';
@@ -9,7 +10,8 @@ import '../../../../core/cubits/cubit_todo/states.dart';
 class ItemBuilderBoard extends StatelessWidget {
   final Map task;
   final bool isFavoriteScreen;
-  const ItemBuilderBoard({Key? key, required this.task, required this.isFavoriteScreen,
+  TextEditingController controller=TextEditingController();
+  ItemBuilderBoard({Key? key, required this.task, required this.isFavoriteScreen,
 
   }) : super(key: key);
 
@@ -49,15 +51,27 @@ class ItemBuilderBoard extends StatelessWidget {
               SizedBox(
                 width: 5.w,
               ),
-              Text(
-                task['title'],
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18.sp,
+              GestureDetector(
+                onDoubleTap: (){
+                  cubit.changeFavoriteTask(favorite: task['favorite']=='favorite'?'unFavorite':'favorite',id: task['id']);
+                },
+                onTap: (){
+                  cubit.editingTask(task);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddTaskPage()),
+                  );
+                },
+                child: Text(
+                  task['title'],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18.sp,
+                  ),
                 ),
               ),
             ],
@@ -75,4 +89,18 @@ class ItemBuilderBoard extends StatelessWidget {
       },
     );
   }
+
+  DropdownButton dropdownButton(List list,TextEditingController controller,IconData iconData)=>DropdownButton(
+    icon:  Icon(iconData,),
+    items: list.map<DropdownMenuItem<String>>((value) {
+      return DropdownMenuItem(
+        value: value,
+        child:Text(value),
+      );
+    }).toList(),
+    onChanged: (item){
+      controller.text=item;
+    },
+  );
+
 }

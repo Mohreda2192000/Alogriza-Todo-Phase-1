@@ -28,3 +28,5 @@ class ChangeFavoriteTaskState extends TodoStates{}
 class ChangeCompletedTaskState extends TodoStates{}
 
 class SearchingState extends TodoStates{}
+
+class EditTaskState extends TodoStates{}

@@ -11,9 +11,35 @@ class TodoCubit extends Cubit<TodoStates> {
   TodoCubit() : super(TodoInitialState());
 
   static TodoCubit get(context) => BlocProvider.of(context);
+  TextEditingController titleController=TextEditingController();
+  TextEditingController dateController=TextEditingController();
+  TextEditingController startTimeController=TextEditingController();
+  TextEditingController endTimeController=TextEditingController();
+  TextEditingController remindController=TextEditingController();
+  TextEditingController repeatController=TextEditingController();
+  TextEditingController colorController=TextEditingController();
+  String isFavorite="Favorite";
+  String textButton="Create a task";
   bool isSearching=false;
   int currentIndex = 0;
   bool favorite = false;
+  void editingTask(Map map){
+    titleController.text=map['title'];
+    dateController.text=map['date'];
+    startTimeController.text=map['startTime'];
+    endTimeController.text=map['endTime'];
+    remindController.text=map['remind'];
+    repeatController.text=map['repeat'];
+    colorController.text=map['color'];
+    textButton='Save Changing';
+    if(map['favorite']=='favorite')favorite=true;
+    favoriteOrNot();
+    if(map['color']=='red')choiceTaskColor(red: 1,orange: 0,yellow: 0,blue: 0);
+    if(map['color']=='orange')choiceTaskColor(red: 0,orange: 1,yellow: 0,blue: 0);
+    if(map['color']=='blue')choiceTaskColor(red: 0,orange: 0,yellow: 0,blue: 1);
+    if(map['color']=='yellow')choiceTaskColor(red: 0,orange: 0,yellow: 1,blue: 0);
+    emit(EditTaskState());
+  }
   IconData favoriteIcon = Icons.favorite_border_outlined;
   void search(bool search){
     isSearching=search;

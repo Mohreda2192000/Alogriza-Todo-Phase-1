@@ -11,15 +11,10 @@ import '../../../board/presentation/page/board_page.dart';
 
 class AddTaskWidget extends StatelessWidget {
 
+
   var formKey = GlobalKey<FormState>();
-  TextEditingController titleController=TextEditingController();
-  TextEditingController dateController=TextEditingController();
-  TextEditingController startTimeController=TextEditingController();
-  TextEditingController endTimeController=TextEditingController();
-  TextEditingController remindController=TextEditingController();
-  TextEditingController repeatController=TextEditingController();
-  TextEditingController colorController=TextEditingController();
-   AddTaskWidget({Key? key}) : super(key: key);
+
+   AddTaskWidget({Key? key,}) : super(key: key);
 
    List<String>remindItems=[
      'Never',
@@ -37,8 +32,8 @@ class AddTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    remindController.text='Never';
-    repeatController.text='Once';
+    TodoCubit.get(context).remindController.text='Never';
+    TodoCubit.get(context).repeatController.text='Once';
     return BlocConsumer<TodoCubit,TodoStates>(
       listener: (context,state){},
       builder: (context,state){
@@ -86,14 +81,14 @@ class AddTaskWidget extends StatelessWidget {
                           MyTextForm(
                             hint: 'Enter your title',
                             label: 'Title',
-                            controller: titleController,
+                            controller: cubit.titleController,
                             validator: 'title must be not empty',
 
                           ),
                           MyTextForm(
                             hint: DateFormat.yMMMd().format(DateTime.now()),
                             label: 'Date',
-                            controller: dateController,
+                            controller: cubit.dateController,
                             widget: IconButton(
                               onPressed: (){
                                 showDatePicker(
@@ -102,7 +97,7 @@ class AddTaskWidget extends StatelessWidget {
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime.parse('2030-12-30'),
                                 ).then((value) {
-                                  dateController.text =
+                                  cubit.dateController.text =
                                       DateFormat.yMMMd().format(value!);
                                 });
                               },
@@ -117,8 +112,8 @@ class AddTaskWidget extends StatelessWidget {
                                 child: MyTextForm(
                                   hint: TimeOfDay.now().format(context).toString(),
                                   label: 'Start time',
-                                  controller: startTimeController,
-                                  widget: timePicker(context,startTimeController),
+                                  controller: cubit.startTimeController,
+                                  widget: timePicker(context,cubit.startTimeController),
                                   validator: '',
 
                                 ),
@@ -128,8 +123,8 @@ class AddTaskWidget extends StatelessWidget {
                                 child: MyTextForm(
                                   hint: TimeOfDay.now().format(context).toString(),
                                   label: 'End time',
-                                  controller: endTimeController,
-                                  widget: timePicker(context,endTimeController),
+                                  controller: cubit.endTimeController,
+                                  widget: timePicker(context,cubit.endTimeController),
                                   validator: 'end time must be not empty',
 
                                 ),
@@ -139,15 +134,15 @@ class AddTaskWidget extends StatelessWidget {
                           MyTextForm(
                             hint: 'Never',
                             label: 'Remind',
-                            controller: remindController,
-                            widget: dropdownButton(remindItems,remindController),
+                            controller: cubit.remindController,
+                            widget: dropdownButton(remindItems,cubit.remindController),
 
                           ),
                           MyTextForm(
                             hint: 'Once',
                             label: 'Repeat',
-                            controller: repeatController,
-                            widget:  dropdownButton(repeatItems,repeatController),
+                            controller: cubit.repeatController,
+                            widget:  dropdownButton(repeatItems,cubit.repeatController),
 
                           ),
                           SizedBox(height: 30.h,),
@@ -162,7 +157,10 @@ class AddTaskWidget extends StatelessWidget {
                               IconButton(
                                 onPressed: (){
                                   cubit.choiceTaskColor(red: 0,orange: 1,yellow: 0,blue: 0);
-
+                                  cubit.choiceTaskColor(red: 1,orange: 0,yellow: 0,blue: 0);
+                                  cubit.choiceTaskColor(red: 0,orange: 1,yellow: 0,blue: 0);
+                                  cubit.choiceTaskColor(red: 0,orange: 0,yellow: 0,blue: 1);
+                                  cubit.choiceTaskColor(red: 0,orange: 0,yellow: 1,blue: 0);
                                 },
                                 icon: Icon(cubit.iconOfChoiceColorOrange,color: Colors.orange,),
                               ),
@@ -189,24 +187,24 @@ class AddTaskWidget extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
                             child: MyButton(
-                              text: 'Create a task',
+                              text: cubit.textButton,
                               callback: (){
                                 if(formKey.currentState!.validate()){
-                                  String isFavorite=((cubit.favorite)?"favorite":"unfavored");
+                                  cubit.isFavorite=((cubit.favorite)?"favorite":"unfavored");
                                   cubit.insertDatabase(
-                                    title: titleController.text,
-                                    date: dateController.text,
-                                    startTime:startTimeController.text,
-                                    endTime: endTimeController.text,
-                                    remind: remindController.text,
-                                    repeat: repeatController.text,
+                                    title: cubit.titleController.text,
+                                    date: cubit.dateController.text,
+                                    startTime:cubit.startTimeController.text,
+                                    endTime: cubit.endTimeController.text,
+                                    remind: cubit.remindController.text,
+                                    repeat: cubit.repeatController.text,
                                     color: cubit.colorOfTask,
-                                    favorite: isFavorite,
+                                    favorite: cubit.isFavorite,
                                   );
-                                  titleController.clear();
-                                  dateController.clear();
-                                  startTimeController.clear();
-                                  endTimeController.clear();
+                                  cubit.titleController.clear();
+                                  cubit.dateController.clear();
+                                  cubit. startTimeController.clear();
+                                  cubit.endTimeController.clear();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => const BoardPage()),
