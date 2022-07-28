@@ -40,7 +40,7 @@ class NotificationTasks extends StatelessWidget {
               ),
             ),
             const Line(),
-            Expanded(flex:2,child: NotificationItem()),
+             Expanded(flex:2,child: NotificationItem()),
           ],
         ),
       ),

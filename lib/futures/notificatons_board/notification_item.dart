@@ -8,7 +8,7 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(itemBuilder: (context,index) {
       return Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.h,vertical: 20.w),
+        margin: EdgeInsets.symmetric(horizontal: 10.h,vertical: 5.w),
         padding: EdgeInsets.symmetric(horizontal: 15.h,vertical: 7.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.h),
@@ -41,6 +41,6 @@ class NotificationItem extends StatelessWidget {
           ],
         ),
       );
-    },itemCount: 10,);
+    },itemCount: 1,);
   }
 }
