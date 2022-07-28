@@ -182,7 +182,7 @@ Map task={};
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  AddTaskPage()),
+                          builder: (context) =>  AddTaskPage(inUpdate:false)),
                     );
                   },
                   buttonColor: Colors.green,

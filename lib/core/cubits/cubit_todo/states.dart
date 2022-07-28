@@ -23,6 +23,8 @@ class ShowTasksOfDayState extends TodoStates{}
 
 class TodoDeleteDatabaseState extends TodoStates{}
 
+class TodoUpdateDatabaseState extends TodoStates{}
+
 class ChangeFavoriteTaskState extends TodoStates{}
 
 class ChangeCompletedTaskState extends TodoStates{}

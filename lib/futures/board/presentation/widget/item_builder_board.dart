@@ -59,7 +59,7 @@ class ItemBuilderBoard extends StatelessWidget {
                   cubit.editingTask(task);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddTaskPage()),
+                    MaterialPageRoute(builder: (context) => AddTaskPage(inUpdate: true,)),
                   );
                 },
                 child: Text(

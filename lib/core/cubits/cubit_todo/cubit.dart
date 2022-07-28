@@ -23,7 +23,9 @@ class TodoCubit extends Cubit<TodoStates> {
   bool isSearching=false;
   int currentIndex = 0;
   bool favorite = false;
+  Map task={};
   void editingTask(Map map){
+    task=map;
     titleController.text=map['title'];
     dateController.text=map['date'];
     startTimeController.text=map['startTime'];
@@ -31,7 +33,6 @@ class TodoCubit extends Cubit<TodoStates> {
     remindController.text=map['remind'];
     repeatController.text=map['repeat'];
     colorController.text=map['color'];
-    textButton='Save Changing';
     if(map['favorite']=='favorite')favorite=true;
     favoriteOrNot();
     if(map['color']=='red')choiceTaskColor(red: 1,orange: 0,yellow: 0,blue: 0);
@@ -181,6 +182,7 @@ class TodoCubit extends Cubit<TodoStates> {
       getDataFromDatabase(database);
     });
   }
+
   void changeFavoriteTask({
     required String favorite,
     required int id,
@@ -201,6 +203,26 @@ class TodoCubit extends Cubit<TodoStates> {
       getDataFromDatabase(database);
     });
   }
+
+  void unDateTask({
+    required String title,
+    required String date,
+    required String startTime,
+    required String endTime,
+    required String remind,
+    required String repeat,
+    required String favorite,
+    required String color,
+    required String statue,
+  }) {
+    //title ,date ,startTime ,endTime ,remind ,repeat ,favorite ,color ,statue
+    database.rawUpdate('UPDATE Tasks SET title = ? date = ? startTime = ? endTime = ? remind = ? repeat = ? favorite = ? color = ? statue = ? WHERE id = ?',
+        [title,date,startTime,endTime,remind,repeat,favorite,color,statue,task['id'] ]).then((value) {
+      emit(TodoUpdateDatabaseState());
+      getDataFromDatabase(database);
+    });
+  }
+
   var date = DateTime.now();
   String day = "Today";
   List<Map>tasksDay = [];

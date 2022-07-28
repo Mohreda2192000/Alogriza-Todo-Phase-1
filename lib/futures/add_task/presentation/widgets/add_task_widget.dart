@@ -11,10 +11,10 @@ import '../../../board/presentation/page/board_page.dart';
 
 class AddTaskWidget extends StatelessWidget {
 
-
+  final bool inUpdate;
   var formKey = GlobalKey<FormState>();
 
-   AddTaskWidget({Key? key,}) : super(key: key);
+   AddTaskWidget({Key? key, required this.inUpdate,}) : super(key: key);
 
    List<String>remindItems=[
      'Never',
@@ -187,20 +187,35 @@ class AddTaskWidget extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.h),
                             child: MyButton(
-                              text: cubit.textButton,
+                              text: inUpdate==false?'Add a Task':'Save Changing',
                               callback: (){
                                 if(formKey.currentState!.validate()){
                                   cubit.isFavorite=((cubit.favorite)?"favorite":"unfavored");
-                                  cubit.insertDatabase(
-                                    title: cubit.titleController.text,
-                                    date: cubit.dateController.text,
-                                    startTime:cubit.startTimeController.text,
-                                    endTime: cubit.endTimeController.text,
-                                    remind: cubit.remindController.text,
-                                    repeat: cubit.repeatController.text,
-                                    color: cubit.colorOfTask,
-                                    favorite: cubit.isFavorite,
-                                  );
+                                  if(inUpdate==false) {
+                                    cubit.insertDatabase(
+                                      title: cubit.titleController.text,
+                                      date: cubit.dateController.text,
+                                      startTime: cubit.startTimeController.text,
+                                      endTime: cubit.endTimeController.text,
+                                      remind: cubit.remindController.text,
+                                      repeat: cubit.repeatController.text,
+                                      color: cubit.colorOfTask,
+                                      favorite: cubit.isFavorite,
+                                    );
+                                  }
+                                  else{
+                                    cubit.unDateTask(
+                                      title: cubit.titleController.text,
+                                      date: cubit.dateController.text,
+                                      startTime: cubit.startTimeController.text,
+                                      endTime: cubit.endTimeController.text,
+                                      remind: cubit.remindController.text,
+                                      repeat: cubit.repeatController.text,
+                                        favorite: cubit.isFavorite,
+                                        color: cubit.colorOfTask,
+                                        statue: 'statue',
+                                    );
+                                  }
                                   cubit.titleController.clear();
                                   cubit.dateController.clear();
                                   cubit. startTimeController.clear();
